@@ -1,0 +1,15 @@
+{
+    "name": "rangel/tcc",
+    "autoload": {
+        "psr-4": {
+            "Rangel\\Tcc\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rangel-Vieira",
+            "email": "rangel.vieira.uappi@gmail.com"
+        }
+    ],
+    "require": {}
+}
