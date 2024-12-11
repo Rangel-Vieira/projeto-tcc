@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php require_once ROOT_DIR . 'views/defaultHeadConfigs.php' ?>
     <title>Editar tarefa</title>
-    <link rel="stylesheet" href="./css/styles.css">
-    <link rel="stylesheet" href="./css/libs/google-fonts.css">
 </head>
 <body>
     <header id="header">
-        <?php require_once '../views/header.php' ?>
+        <?php require_once ROOT_DIR . 'views/header.php' ?>
         <h1>Visualização de tarefa</h1>
     </header>
     <main id="main">
@@ -32,7 +28,11 @@
                     <div>
                         <img src="./image.php?image_path=../media/img/vaso.jpeg" alt="Imagem da atividade">
                     </div>
-                    <button type="button" id="button-task-go-back" class="green-button">Voltar</button>
+                    <a href="/">
+                        <button type="button" id="button-task-go-back" class="styled-button green">
+                            Voltar
+                        </button>
+                    </a>
                 </section>
             </center>
         </div>

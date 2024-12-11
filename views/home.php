@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php require_once ROOT_DIR . 'views/defaultHeadConfigs.php' ?>
     <title>Gerenciador de tarefas</title>
-    <link rel="stylesheet" href="./css/styles.css">
-    <link rel="stylesheet" href="./css/libs/google-fonts.css">
 </head>
 <body>
     <header id="header">
-        <?php require_once '../views/header.php' ?>
+        <?php require_once ROOT_DIR . 'views/header.php' ?>
         <h1>Bem vindo ao gerenciador de tarefas!</h1>
     </header>
     <main id="main">
@@ -33,8 +29,8 @@
                     <footer>
                         <p>Data de conclusão</p>
                         <div>
-                            <a href="#"><i class="material-icons">visibility</i></a>
-                            <a href="#"><i class="material-icons">edit</i></a>
+                            <a href="/visualizar"><i class="material-icons">visibility</i></a>
+                            <a href="/task"><i class="material-icons">edit</i></a>
                             <a href="#"><i class="material-icons">delete</i></a>
                         </div>
                     </footer>
