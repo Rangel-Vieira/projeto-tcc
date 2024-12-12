@@ -13,28 +13,30 @@
         <div class="container">
             <p class="container-title">Aqui você poderá visualizar, alterar ou excluir suas atividades quando quiser</p>
             <div class="task-cards">
-                <section class="task-card">
-                    <header>
-                        <p>Título</p>
-                        <p>Status</p>
-                    </header>
-                    <div class="task-card-main">
-                        <p>Descrição</p>
-                        <figure>
-                            <center>
-                                <img src="./image.php?image_path=../media/img/vaso.jpeg" alt="Imagem atividade">
-                            </center>
-                        </figure>
-                    </div>
-                    <footer>
-                        <p>Data de conclusão</p>
-                        <div>
-                            <a href="/task"><i class="material-icons">visibility</i></a>
-                            <a href="/task/edit"><i class="material-icons">edit</i></a>
-                            <a href="/task/delete"><i class="material-icons">delete</i></a>
+                <?php foreach($items as $item) { ?>
+                    <section class="task-card" id="<?= $item['id'] ?>">
+                        <header>
+                            <p><?= $item['title'] ?></p>
+                            <p><?= $item['status'] === 'completed' ? 'Completa' : 'Pendente' ?></p>
+                        </header>
+                        <div class="task-card-main">
+                            <p><?= $item['description'] ?></p>
+                            <figure>
+                                <center>
+                                    <img src="./image.php?image_path=<?= $item['image_url'] ?>" alt="Imagem atividade">
+                                </center>
+                            </figure>
                         </div>
-                    </footer>
-                </section>
+                        <footer>
+                            <p><?php $date = new DateTimeImmutable($item['done_date']); echo $date->format('d/m/y') ?></p>
+                            <div>
+                                <a href="/task?id=<?= $item['id'] ?>"><i class="material-icons">visibility</i></a>
+                                <a href="/task/edit?id=<?= $item['id'] ?>"><i class="material-icons">edit</i></a>
+                                <a href="/task/delete?id=<?= $item['id'] ?>"><i class="material-icons">delete</i></a>
+                            </div>
+                        </footer>
+                    </section>    
+                <?php  } ?>
             </div>
         </div>
     </main>

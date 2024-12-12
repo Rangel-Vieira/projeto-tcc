@@ -16,17 +16,17 @@
                     <header class="flex space-around">
                         <div>
                             <p>Data de conclusão</p>
-                            <p>DATA</p>
+                            <p><?= $task['done_date'] ?? 'Não concluída' ?></p>
                         </div>
                         <div>
                             <p>Status</p>
-                            <p>STATUS</p>
+                            <p><?= $task['status'] === 'completed' ? 'Completa' : 'Pendente' ?></p>
                         </div>
                     </header>    
-                    <p>Título da atividade</p>
-                    <p>Descrição da atividade</p>
+                    <p><?= $task['title'] ?></p>
+                    <p><?= $task['description'] ?></p>
                     <div>
-                        <img src="./image.php?image_path=../media/img/vaso.jpeg" alt="Imagem da atividade">
+                        <img src="./image.php?image_path=<?= $task['image_url'] ?>" alt="Imagem da atividade">
                     </div>
                     <a href="/">
                         <button type="button" id="button-task-go-back" class="styled-button green">

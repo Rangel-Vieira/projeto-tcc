@@ -3,7 +3,8 @@
     "autoload": {
         "psr-4": {
             "Rangel\\Tcc\\":  "src/",
-            "Rangel\\Libs\\": "libs/"
+            "Rangel\\Libs\\": "libs/",
+            "Rangel\\Config\\": "config/"
         }
     },
     "authors": [

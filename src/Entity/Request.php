@@ -23,7 +23,7 @@ class Request{
     }
 
     public function getRequestParam(string $param){
-        return $this->params[$param] ?? '';
+        return $this->params[$param] ?? null;
     }
 
 }

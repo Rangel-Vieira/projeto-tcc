@@ -7,6 +7,12 @@ use PDO;
 use Exception;
 use PDOStatement;
 
+/**
+ * Classe responsável por fazer a comunicação com as tabelas de um banco de dados
+ * Tenta evitar SQL Injection por padrão
+ * @author Rangel-Vieira
+ */
+
 class Repository {
     
     private PDO $connection;
@@ -29,6 +35,10 @@ class Repository {
     public function getLastInsertedId(): int{
         return $this->connection->lastInsertId();
     }
+
+    public function getTableCount(): int{
+        return $this->findByQuery('count(*) as count')[0]['count'];
+    }
     
     public function findAll(): array{
         return $this->fetch();
@@ -37,7 +47,7 @@ class Repository {
     public function findById(string $id): array{
         $this->validateTableId();
 
-        return $this->fetch(filters: $this->id_key . ' = :id', filterValues:[$id]);
+        return $this->fetch(filters: $this->id_key . ' = :id', filterValues:[$id]) ?? null;
     }
 
     public function findByQuery(string $fields = '*', string $filters = '1', array $filterValues = [], string $orderBy = '1', int $limit = -1, int $offset = 0): array{

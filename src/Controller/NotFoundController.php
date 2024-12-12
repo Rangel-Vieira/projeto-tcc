@@ -7,7 +7,7 @@ class NotFoundController extends Controller{
 
     public $endpoints = [];
 
-    public function request(Request $request, object $caller = null): void{
+    public function request(Request $request): void{
         $this->notFound();
     }
 
