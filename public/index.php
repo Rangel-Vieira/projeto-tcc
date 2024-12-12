@@ -1,21 +1,18 @@
 <?php 
+use Rangel\Tcc\Controller\NotFoundController;
 
 define("ROOT_DIR", __DIR__ . '/../');
 
 require_once ROOT_DIR . 'vendor/autoload.php';
-require_once ROOT_DIR . 'config/routes.php';
+require_once ROOT_DIR . 'config/ControllerRoutes.php';
 
-$PATH_INFO = $_SERVER['PATH_INFO'] ?? '/';
-$REQUEST_METHOD = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+use Rangel\Tcc\Entity\Request;
 
-function navigate(string $url){
-    require_once $url;
-}
+$path_info = $_SERVER['PATH_INFO'] ?? '/';
+$request_method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+$params = $request_method === 'GET' ? $_GET : $_POST;
 
-$foundPath = ROUTES[$REQUEST_METHOD . '|' . $PATH_INFO];
-if(!$foundPath){
-    header('Location: /');
-    exit();
-}
-
-navigate($foundPath);
+$request = new Request($path_info, $request_method, $params);
+$classController = ControllerRoutes::getController($request) ?? NotFoundController::class;
+$controller = new $classController;
+$controller->request($request);

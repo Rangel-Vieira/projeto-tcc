@@ -37,6 +37,6 @@
             </center>
         </div>
     </main>
-    <?php require_once '../views/footer.php' ?>
+    <?php require_once ROOT_DIR . 'views/footer.php' ?>
     </body>
 </html>

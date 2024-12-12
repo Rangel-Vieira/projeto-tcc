@@ -5,14 +5,16 @@ use Rangel\Tcc\Entity\Request;
 
 class HomeController extends Controller{
 
-    private $teste;
+    public $endpoints = [
+        'GET|/'  => 'toHome'
+    ];
 
-    public function request(Request $request): void{
+    public function request(Request $request, object $caller = null): void{
         parent::processRequest($request, $this);
     }
 
-    private function toHome(){
-
+    public function toHome(){
+        require_once ROOT_DIR . 'views/home.php';
     }
 
 }

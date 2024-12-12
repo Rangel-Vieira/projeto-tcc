@@ -29,15 +29,15 @@
                     <footer>
                         <p>Data de conclusão</p>
                         <div>
-                            <a href="/visualizar"><i class="material-icons">visibility</i></a>
-                            <a href="/task"><i class="material-icons">edit</i></a>
-                            <a href="#"><i class="material-icons">delete</i></a>
+                            <a href="/task"><i class="material-icons">visibility</i></a>
+                            <a href="/task/edit"><i class="material-icons">edit</i></a>
+                            <a href="/task/delete"><i class="material-icons">delete</i></a>
                         </div>
                     </footer>
                 </section>
             </div>
         </div>
     </main>
-    <?php require_once '../views/footer.php' ?>
+    <?php require_once ROOT_DIR . 'views/footer.php' ?>
     </body>
 </html>
