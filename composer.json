@@ -2,7 +2,8 @@
     "name": "rangel/tcc",
     "autoload": {
         "psr-4": {
-            "Rangel\\Tcc\\": "src/"
+            "Rangel\\Tcc\\":  "src/",
+            "Rangel\\Libs\\": "libs/"
         }
     },
     "authors": [
