@@ -11,7 +11,7 @@ enum PARSE_MODE: int{
 
 class ParseConvention {
 
-    public static function parse(array|object $origin, PARSE_MODE $mode, string $class = null): array|object{
+    public static function parse(array|object $origin, PARSE_MODE $mode = PARSE_MODE::camelToSnake, string $class = null): array|object{
         if(!is_null($class) && !class_exists($class)) throw new Exception("A classe " . $class . " não foi encontrada.");
         
         $parsed = [];

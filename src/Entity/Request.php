@@ -7,11 +7,13 @@ class Request{
     private readonly string $path;
     private readonly string $method;
     private readonly array $params;
+    private readonly array $files;
 
-    public function __construct(string $path, string $method, array $params){
+    public function __construct(string $path, string $method, array $params, array $files){
         $this->path = $path;
         $this->method = $method;
         $this->params = $params;
+        $this->files = $files;
     }
 
     public function __toString(){
@@ -32,6 +34,14 @@ class Request{
 
     public function getRequestParam(string $param){
         return $this->params[$param] ?? null;
+    }
+
+    public function getRequestFiles(){
+        return $this->files;
+    }
+
+    public function getRequestFile(string $file){
+        return $this->files[$file] ?? null;
     }
 
 }

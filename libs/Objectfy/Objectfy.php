@@ -17,7 +17,8 @@ class Objectfy {
         return $keys;
     }
 
-    public static function getObjectKeysAndValues(object $object): array{
+    public static function getObjectKeysAndValues(array|object $object): array{
+        if(gettype($object) === 'array') return $object;
 
         $objectReflection = new ReflectionClass($object);
         $properties = $objectReflection->getProperties();
@@ -37,7 +38,7 @@ class Objectfy {
         return $keyAndValues;
     }
 
-    public static function checkIfObjectIsValid($object, $allowedList = ['NULL', 'string', 'integer', 'double']): bool{
+    public static function checkIfObjectIsValid(array $object, array $allowedList = ['NULL', 'string', 'integer', 'double']): bool{
         $objVals = self::getObjectKeysAndValues($object);
 
         foreach($objVals as $objVal){
@@ -53,7 +54,7 @@ class Objectfy {
      * Recebe o mapeamento e um array para converter
      * @param array $convertion ex ['input-id' => 'id', ['input-text'] => 'description']
      * @param array $origin ex ['input-id' => valor, 'input-text' => valor]
-     * @return array um objeto do tipo $class com os atributos e valores
+     * @return array um array com as chaves convertidas com base em $convertion
      */
     public static function parseArray(array $convertion, array $origin): array{
         $arr = [];

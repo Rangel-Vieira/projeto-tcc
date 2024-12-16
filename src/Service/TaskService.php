@@ -1,15 +1,22 @@
 <?php 
 
 namespace Rangel\Tcc\Service;
+use Rangel\Libs\ParseConvention\ParseConvention;
+use Rangel\Libs\ParseConvention\PARSE_MODE;
+use Rangel\Tcc\Entity\Request;
 use Rangel\Tcc\Entity\Task;
 use Rangel\Tcc\Repository\TaskRepository;
+use Rangel\Tcc\Service\FileService;
 
 class TaskService {
 
     private TaskRepository $taskRepository;
+    private FileService $imgService;
+    
 
     public function __construct(){
         $this->taskRepository = new TaskRepository();
+        $this->imgService = new FileService('media/img');
     }
 
     /**
@@ -41,12 +48,31 @@ class TaskService {
         return $this->taskRepository->findById($id);
     }
 
-    public function save(Task $task){
-        $this->taskRepository->save($task);
+    public function save(Task $task, Request $request){
+        $taskToDatabase = ParseConvention::parse($task, PARSE_MODE::camelToSnake);
+        $taskToDatabase['done_date'] = $taskToDatabase['done_date']->format('Y-m-d');
+
+        $this->taskRepository->save($taskToDatabase);
+        $this->imgService->save($request->getRequestFile('input-image'), $task->getimageUrl(), 3000000, ['image/png', 'image/gif', 'image/jpeg']);
     }
 
-    public function update(int $id, Task $task){
-        $this->taskRepository->update($id, $task);
+    public function update(int $id, Task $task, Request $request){
+        $oldTask = $this->findById($id);
+        $taskToDatabase = ParseConvention::parse($task, PARSE_MODE::camelToSnake);
+        $taskToDatabase['done_date'] = $taskToDatabase['done_date']->format('Y-m-d');
+
+        if(!empty($task->getimageUrl())){
+            $this->imgService->remove($oldTask->getimageUrl());
+            $this->imgService->save($request->getRequestFile('input-image'), $task->getimageUrl(), 3000000, ['image/png', 'image/gif', 'image/jpeg']);
+        }
+
+        $this->taskRepository->update($id, $taskToDatabase);
+    }
+
+    public function delete(int $id): void{
+        $task = $this->findById($id);
+        $this->imgService->remove($task->getimageUrl());
+        $this->taskRepository->delete($task->getId());
     }
 
 }

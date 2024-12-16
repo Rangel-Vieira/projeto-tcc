@@ -1,6 +1,5 @@
 <?php 
 use Rangel\Tcc\Controller\NotFoundController;
-use Rangel\Tcc\Entity\Task;
 use Rangel\Tcc\Service\RequestService;
 
 define("ROOT_DIR", __DIR__ . '/../');

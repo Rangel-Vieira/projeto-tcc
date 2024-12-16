@@ -54,7 +54,7 @@ class Repository {
         return $this->fetch($fields, $filters, $filterValues, $orderBy, $limit, $offset);
     }
 
-    public function add(object $object): bool{
+    public function add(array|object $object): bool{
         Objectfy::checkIfObjectIsValid($object);
 
         $statement = $this->prepareInsert($object);
@@ -63,7 +63,7 @@ class Repository {
         return true;
     }
 
-    public function update(string $id, object $object): bool{
+    public function update(string $id, array|object $object): bool{
         $this->validateTableId();
         Objectfy::checkIfObjectIsValid($object);
         $this->checkIfObjectExists($id);
@@ -183,7 +183,7 @@ class Repository {
         return $foundKeys[0];
     }
 
-    private function prepareInsert(object $object): PDOStatement{
+    private function prepareInsert(array|object $object): PDOStatement{
 
         $statement = null;
         $objectKeyAndValues = Objectfy::getObjectKeysAndValues($object);
@@ -204,7 +204,7 @@ class Repository {
         return $statement;
     }
 
-    private function prepareUpdate(string $id, object $object): PDOStatement{
+    private function prepareUpdate(string $id, array|object $object): PDOStatement{
 
         $statement = null;
         $objectKeyAndValues = Objectfy::getObjectKeysAndValues($object);
