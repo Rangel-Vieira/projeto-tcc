@@ -8,13 +8,13 @@ use Rangel\Tcc\Service\TaskService;
 class HomeController extends Controller{
     private TaskService $taskService;
 
-    public function __construct(){
-        $this->taskService = new TaskService();
-    }
-
     public $endpoints = [
         'GET|/'  => 'toHome'
     ];
+
+    public function __construct(){
+        $this->taskService = new TaskService();
+    }
 
     public function request(Request $request): void{
         parent::processRequest($request, $this);

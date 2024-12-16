@@ -11,6 +11,11 @@
     </header>
     <main id="main">
         <div class="container">
+            <a href="/task/new">
+                <button type="button" id="button-task-go-back" class="styled-button green spacing-bottom">
+                    Adicionar
+                </button>
+            </a>
             <p class="container-title">Aqui você poderá visualizar, alterar ou excluir suas atividades quando quiser</p>
             <div class="task-cards">
                 <?php foreach($items as $item) { ?>

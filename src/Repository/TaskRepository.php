@@ -1,6 +1,8 @@
 <?php 
 
 namespace Rangel\Tcc\Repository;
+use Rangel\Libs\Objectfy\Objectfy;
+use Rangel\Tcc\Entity\Task;
 use Rangel\Tcc\Repository\IRepository;
 use Rangel\Libs\Repository\Repository;
 use Rangel\Config\Connection;
@@ -21,8 +23,10 @@ class TaskRepository implements IRepository {
         return $this->tbTaskRepository->getTableCount();
     }
 
-    public function findById(string $id): array{
-        return $this->tbTaskRepository->findById($id);
+    public function findById(string $id): Task{
+        $task = Objectfy::arrayToClass($this->tbTaskRepository->findById($id)[0], Task::class);
+
+        return $task;
     }
 
     public function list(int $limit, int $offset): array{

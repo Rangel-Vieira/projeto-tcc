@@ -166,6 +166,7 @@ body{
 
 .styled-button:hover{
     cursor: pointer;
+    filter: brightness(85%);
 }
 
 .green{
@@ -219,4 +220,8 @@ body{
 
 .not-found-img{
     width: 50px;
+}
+
+.spacing-bottom{
+    margin-bottom: 25px;
 }

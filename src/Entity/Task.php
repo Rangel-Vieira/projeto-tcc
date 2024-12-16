@@ -2,57 +2,55 @@
 
 namespace Rangel\Tcc\Entity;
 use DateTimeInterface;
-use stdClass;
+use Rangel\Libs\Objectfy\Objectfy;
 
 //TODO: regrinhas, só pode ter data de conclusão, se o status for concluído;
 class Task {
 
-    private ?int $id;
-    private string $title;
-    private string $description;
-    private DateTimeInterface $doneDate;
-    private string $status;
-    private string $imageURL;
+    private ?int $id = 0;
+    private ?string $title;
+    private ?string $description;
+    private ?DateTimeInterface $doneDate;
+    private ?string $status;
+    private ?string $imageUrl;
 
-    public function __construct(int $id = null, string $title, string $description = null, DateTimeInterface $doneDate = null, 
-        string $status, string $imageURL = null){
+    public function __construct(int $id = null, string $title = null, string $description = null, DateTimeInterface $doneDate = null, 
+        string $status = null, string $imageUrl = null){
 
             $this->id = $id;
             $this->title = $title;
             $this->description = $description;
             $this->doneDate = $doneDate;
             $this->status = $status;
-            $this->imageURL = $imageURL;
+            $this->imageUrl = $imageUrl;
     }
 
     public function __toString(): string{
         return '[' .
-               'id:'. $this->id                               . ',' . 
-               'title:' . $this->title                        . ',' . 
-               'description:' . $this->description            . ',' . 
-               'doneDate:' . $this->doneDate->format('d-m-y') . ',' . 
-               'status:' . $this->status                      . ',' .
-               'imageURL:' . $this->imageURL                  . ',' .
+               'id:'            . $this->id                                . ',' . 
+               'title:'         . $this->title                             . ',' . 
+               'description:'   . $this->description                       . ',' . 
+               'doneDate:'      . $this->doneDate->format('d-m-y') ?? null . ',' . 
+               'status:'        . $this->status                            . ',' .
+               'imageUrl:'      . $this->imageUrl                          . ',' .
                ']';
     }
 
-	public function parseToDatabase(): object{
-		$parsed = new stdClass();
-		
-		$parsed->id = $this->id;
-		$parsed->title = $this->title;
-		$parsed->description = $this->description;
-		$parsed->done_date = $this->doneDate->format('Y-m-d');
-		$parsed->status = $this->status;
-		$parsed->image_url = $this->imageURL;
+	/**
+	 * @return array Retorna os campos que estão faltando, ou true se estiver ok
+	 */
+	public function isValid(): array | bool{
+		$missing = [];
+		if(empty($this->title))  { $missing[] = 'title';  }
+		if(empty($this->status)) { $missing[] = 'status'; }
 
-		return $parsed;
+		return empty($missing) ? true : $missing;
 	}
 
 	/**
 	 * @return integer
 	 */
-	public function getId(): int {
+	public function getId(): int|null {
 		return $this->id;
 	}
 	
@@ -68,7 +66,7 @@ class Task {
 	/**
 	 * @return string
 	 */
-	public function getTitle(): string {
+	public function getTitle(): string|null {
 		return $this->title;
 	}
 	
@@ -84,7 +82,7 @@ class Task {
 	/**
 	 * @return string
 	 */
-	public function getDescription(): string {
+	public function getDescription(): string|null {
 		return $this->description;
 	}
 	
@@ -100,7 +98,7 @@ class Task {
 	/**
 	 * @return DateTimeInterface
 	 */
-	public function getDoneDate(): DateTimeInterface {
+	public function getDoneDate(): DateTimeInterface|null {
 		return $this->doneDate;
 	}
 	
@@ -116,7 +114,7 @@ class Task {
 	/**
 	 * @return string
 	 */
-	public function getStatus(): string {
+	public function getStatus(): string|null {
 		return $this->status;
 	}
 	
@@ -132,16 +130,16 @@ class Task {
 	/**
 	 * @return string
 	 */
-	public function getImageURL(): string {
-		return $this->imageURL;
+	public function getimageUrl(): string|null {
+		return $this->imageUrl;
 	}
 	
 	/**
-	 * @param string $imageURL 
+	 * @param string $imageUrl 
 	 * @return self
 	 */
-	public function setImageURL(string $imageURL): self {
-		$this->imageURL = $imageURL;
+	public function setimageUrl(string $imageUrl): self {
+		$this->imageUrl = $imageUrl;
 		return $this;
 	}
 }

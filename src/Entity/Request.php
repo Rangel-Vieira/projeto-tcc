@@ -18,6 +18,14 @@ class Request{
         return $this->method . '|' . $this->path;
     }
 
+    public function getPath(){
+        return $this->path;
+    }
+
+    public function getMethod(){
+        return $this->method;
+    }
+
     public function getRequestParams(){
         return $this->params;
     }

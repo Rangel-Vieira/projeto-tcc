@@ -12,23 +12,24 @@
     <main id="main">
         <div class="container">
             <center>
-                <form action="" class="form-task">
-                    <input id="input-title" name="input-title" type="text" placeholder="Título" required>
-                    <textarea id="input-description" name="input-description" placeholder="Descrição" required></textarea>
+                <form action="/task/createEdit" class="form-task" method="post">
+                    <input type="hidden" id="input-id" name="input-id" value="<?= $task->id ?>">
+                    <input id="input-title" name="input-title" type="text" placeholder="Título" required value="<?= $task->title ?? '' ?>">
+                    <textarea id="input-description" name="input-description" placeholder="Descrição" required><?= $task->description ?? '' ?></textarea>
                     <div class="flex space-between">
                         <label for="input-date">
                             Data de conclusão
-                            <input id="input-date" name="input-date" type="date">
+                            <input id="input-date" name="input-date" type="date" value=<?= $task->doneDate ?>>
                         </label>
                         <label for="input-image">
                             Envie uma imagem
-                            <input id="input-image" type="file" accept="image/png, image/gif, image/jpeg">
+                            <input id="input-image" name="input-image" type="file" accept="image/png, image/gif, image/jpeg">
                         </label>
                         <label for="input-status">
                             Status
                             <select id="input-status" name="input-status">
-                                <option value="pending" selected>Pendente</option>
-                                <option value="completed">Concluída</option>
+                                <option value="pending" id="pending">Pendente</option>
+                                <option value="completed" id="completed">Concluída</option>
                             </select>
                         </label>
                     </div>
@@ -38,6 +39,12 @@
                     <button type="submit" id="input-submit" class="styled-button green">Enviar</button>
                 </form>
             </center>
+            <script>
+                $(() => {
+                    const selected = $(<?= $task->status ?>);
+                    selected.attr('selected', true);
+                })
+            </script>
         </div>
     </main>
     <?php require_once ROOT_DIR . 'views/footer.php' ?>

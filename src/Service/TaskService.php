@@ -1,6 +1,7 @@
 <?php 
 
 namespace Rangel\Tcc\Service;
+use Rangel\Tcc\Entity\Task;
 use Rangel\Tcc\Repository\TaskRepository;
 
 class TaskService {
@@ -38,6 +39,14 @@ class TaskService {
 
     public function findById(string $id){
         return $this->taskRepository->findById($id);
+    }
+
+    public function save(Task $task){
+        $this->taskRepository->save($task);
+    }
+
+    public function update(int $id, Task $task){
+        $this->taskRepository->update($id, $task);
     }
 
 }
