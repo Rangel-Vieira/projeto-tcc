@@ -2,10 +2,10 @@
 
 namespace Rangel\Tcc\Controller;
 use Rangel\Tcc\Entity\Request;
-use Rangel\Tcc\Controller\NotFoundController;
 
 interface IController{
     public function request(Request $request): void;
+    public function notFound(): void;
 }
 
 abstract class Controller implements IController {
@@ -14,15 +14,11 @@ abstract class Controller implements IController {
         $callMethod = $caller->endpoints[$request->__toString()];
 
         if(!method_exists($caller, $callMethod)){
-            $this->notFound($request);
-            exit();
+            $caller->notFound($request);
+            exit;
         }
 
         $caller->$callMethod($request);
-    }
-
-    private function notFound(Request $request){
-        $notFound = new NotFoundController();
-        $notFound->request($request);
+        exit;
     }
 }

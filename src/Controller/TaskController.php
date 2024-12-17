@@ -28,6 +28,10 @@ class TaskController extends Controller{
         parent::processRequest($request, $this);
     }
 
+    public function notFound(): void{
+        NotFoundController::toNotFound();
+    }
+
     public function toVisualizeTask(Request $request){
         $task = $this->getTaskOrNotFound($request);
         require_once ROOT_DIR . 'views/viewTask.php';
@@ -49,35 +53,34 @@ class TaskController extends Controller{
         $task = $this->setTask($request);
 
         if(!is_null($task->getId())){
+            $acao = 'atualizada';
             $this->taskService->update($task->getId(), $task, $request);
         }
         else{
+            $acao = 'criada';
             $this->taskService->save($task, $request);
         }
 
-        echo 'A atividade foi salva com sucesso! (Rangel para de ser preguiçoso e faz um response decente :U)';
+        require_once ROOT_DIR . 'views/feedback.php';
     }
 
     public function toDeleteTask(Request $request){
         $this->taskService->delete($request->getRequestParam('id'));
+        $acao = 'excluida';
+
+        require_once ROOT_DIR . 'views/feedback.php';
     }
 
     private function getTaskOrNotFound(Request $request): Task{
-        $id = $request->getRequestParam('id');
-        if(empty($id)) { $this->notFound($request); }
+        $id = $request->getRequestParam('id') ?? null;
+        if(empty($id)) 
+            NotFoundController::toNotFound();
 
         $task = $this->taskService->findById($id);
-        if(empty($task)) { $this->notFound($request); }
+        if(empty($task))
+            NotFoundController::toNotFound();
 
         return $task;
-    }
-
-    private function notFound(Request $request){
-        if(empty($task)) { 
-            $notFound = new NotFoundController();
-            $notFound->request($request);
-            exit();
-        }
     }
 
     private function setTask(Request $request): Task{
@@ -91,12 +94,12 @@ class TaskController extends Controller{
         ];
         
         $imageName = $request->getRequestFile('input-image')['name'] ?? '';
-
         $origin = $request->getRequestParams();
+
         $parsed = Objectfy::parseArray($convertion, $origin);
         $parsed['id'] = empty($parsed['id']) ? null : (int)$parsed['id'];
         $parsed['doneDate'] = new \DateTimeImmutable($parsed['doneDate']);
-        $parsed['imageUrl'] = !empty($imageName) ? FileService::generateUID() . '_' . $imageName : '';
+        $parsed['imageUrl'] = !empty($imageName) ? FileService::generateUID() . '_' . $imageName : null;
 
         $task = Objectfy::arrayToClass($parsed, Task::class);
         return $task;

@@ -20,11 +20,18 @@ class HomeController extends Controller{
         parent::processRequest($request, $this);
     }
 
-    public function toHome(Request $request){
-        $page = $request->getRequestParam('page') ?? 0;
-        $itemsByPage = $request->getRequestParam('itemsByPage') ?? 10;
+    public function notFound(): void{
+        NotFoundController::toNotFound();
+    }
 
-        $items = $this->taskService->list($page, $itemsByPage, 50);
+    public function toHome(Request $request){
+        $page = $request->getRequestParam('page') ?? 1;
+        $itemsByPage = $request->getRequestParam('itemsByPage') ?? 12;
+
+        $found = $this->taskService->list($page-1, $itemsByPage, 50);
+        $items = $found['items'];
+        $pages = $found['pages'];
+
         require_once ROOT_DIR . 'views/home.php';
     }
 }

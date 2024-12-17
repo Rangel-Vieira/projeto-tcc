@@ -6,10 +6,10 @@ class Request{
     
     private readonly string $path;
     private readonly string $method;
-    private readonly array $params;
-    private readonly array $files;
+    private readonly ?array $params;
+    private readonly ?array $files;
 
-    public function __construct(string $path, string $method, array $params, array $files){
+    public function __construct(string $path, string $method, array $params = null, array $files = null){
         $this->path = $path;
         $this->method = $method;
         $this->params = $params;

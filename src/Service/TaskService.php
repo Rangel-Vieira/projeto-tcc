@@ -41,7 +41,7 @@ class TaskService {
         }
 
         $offset = $page * $itemsByPage;
-        return $this->taskRepository->list($itemsByPage, $offset);
+        return ['pages' => $pageQty+1, 'items' => $this->taskRepository->list($itemsByPage, $offset)];
     }
 
     public function findById(string $id){
@@ -53,7 +53,9 @@ class TaskService {
         $taskToDatabase['done_date'] = $taskToDatabase['done_date']->format('Y-m-d');
 
         $this->taskRepository->save($taskToDatabase);
-        $this->imgService->save($request->getRequestFile('input-image'), $task->getimageUrl(), 3000000, ['image/png', 'image/gif', 'image/jpeg']);
+        if($task->getimageUrl()){
+            $this->imgService->save($request->getRequestFile('input-image'), $task->getimageUrl(), 3000000, ['image/png', 'image/gif', 'image/jpeg']);
+        }
     }
 
     public function update(int $id, Task $task, Request $request){
@@ -61,7 +63,7 @@ class TaskService {
         $taskToDatabase = ParseConvention::parse($task, PARSE_MODE::camelToSnake);
         $taskToDatabase['done_date'] = $taskToDatabase['done_date']->format('Y-m-d');
 
-        if(!empty($task->getimageUrl())){
+        if($task->getimageUrl()){
             $this->imgService->remove($oldTask->getimageUrl());
             $this->imgService->save($request->getRequestFile('input-image'), $task->getimageUrl(), 3000000, ['image/png', 'image/gif', 'image/jpeg']);
         }
@@ -71,7 +73,11 @@ class TaskService {
 
     public function delete(int $id): void{
         $task = $this->findById($id);
-        $this->imgService->remove($task->getimageUrl());
+        
+        if($task->getImageUrl()){
+            $this->imgService->remove($task->getimageUrl());
+        }
+
         $this->taskRepository->delete($task->getId());
     }
 

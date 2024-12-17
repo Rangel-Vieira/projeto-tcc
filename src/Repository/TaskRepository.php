@@ -26,7 +26,7 @@ class TaskRepository implements IRepository {
     }
 
     public function findById(string $id): Task|null{
-        $task = $this->tbTaskRepository->findById($id)[0];
+        $task = $this->tbTaskRepository->findById($id)[0] ?? null;
         
         if(!$task){
             return null;

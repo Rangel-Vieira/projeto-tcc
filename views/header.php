@@ -1,3 +1,3 @@
 <div id="header-bar">
-    <p>Header</p>
+    <p>Gerenciador de Tarefas</p>
 </div>

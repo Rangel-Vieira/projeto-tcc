@@ -8,11 +8,17 @@ class NotFoundController extends Controller{
     public $endpoints = [];
 
     public function request(Request $request): void{
-        $this->notFound();
+        $this->toNotFound();
     }
 
-    public function notFound(){
+    public function notFound(): void{
+        self::toNotFound();
+        exit;
+    }
+
+    public static function toNotFound(){
         require_once ROOT_DIR . 'views/notFound.php';
+        exit();
     }
 
 }
