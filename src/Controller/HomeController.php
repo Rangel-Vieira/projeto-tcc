@@ -32,6 +32,14 @@ class HomeController extends Controller{
         $items = $found['items'];
         $pages = $found['pages'];
 
+        $message = '';
+        $status = '';
+
+        if($request->isServerRequest()){
+            $message = $request->getRequestParam('message');
+            $status  = $request->getRequestParam('status');
+        }
+        
         require_once ROOT_DIR . 'views/home.php';
     }
 }

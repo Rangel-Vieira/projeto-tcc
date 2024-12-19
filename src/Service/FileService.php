@@ -37,7 +37,7 @@ class FileService {
         return move_uploaded_file($file['tmp_name'], $this->dirFromRoot . $fileName);
     }
 
-    public function remove(string $fileName): bool{
+    public function remove(string|null $fileName): bool{
         $path = $this->dirFromRoot . $fileName;
         
         if(file_exists($path)){

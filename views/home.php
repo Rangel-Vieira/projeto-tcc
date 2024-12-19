@@ -11,6 +11,10 @@
     </header>
     <main id="main">
         <div class="container">
+            <div id="modal" class="hidden modal modal-<?= $status ?>">
+                <?= $message ?>
+            </div>
+
             <a href="/task/new">
                 <button type="button" id="button-task-go-back" class="styled-button green spacing-bottom">
                     Adicionar
@@ -44,6 +48,19 @@
                 <?php  } ?>
             </div>
         </div>
+
+        <script>
+            var modal = document.getElementById('modal');
+            var status = <?= json_encode($status) ?>
+
+            if(status){
+                modal.classList.remove('hidden');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 2500);
+            }
+        </script>
     </main>
     <?php require_once ROOT_DIR . 'views/footer.php' ?>
     </body>

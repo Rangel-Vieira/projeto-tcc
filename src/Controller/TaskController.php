@@ -1,6 +1,7 @@
 <?php 
 
 namespace Rangel\Tcc\Controller;
+use Exception;
 use Rangel\Libs\Objectfy\Objectfy;
 use Rangel\Tcc\Entity\Request;
 use Rangel\Tcc\Entity\Task;
@@ -52,23 +53,35 @@ class TaskController extends Controller{
     public function toCreateOrEditTask(Request $request){
         $task = $this->setTask($request);
 
-        if(!is_null($task->getId())){
-            $acao = 'atualizada';
-            $this->taskService->update($task->getId(), $task, $request);
+        try{
+            if(!is_null($task->getId())){
+                $action = 'atualizada';
+                $this->taskService->update($task->getId(), $task, $request);
+            }
+            else{
+                $action = 'criada';
+                $this->taskService->save($task, $request);
+            }
+    
+            $request = new Request('/', 'GET', ['message' => 'A atividade foi ' . $action . ' com sucesso.', 'status' => 'success']);
         }
-        else{
-            $acao = 'criada';
-            $this->taskService->save($task, $request);
+        catch(Exception $e){
+            $request = new Request('/', 'GET', ['message' => 'Um erro ocorreu :(, tente novamente mais tarde.', 'status' => 'error']);
         }
 
-        require_once ROOT_DIR . 'views/feedback.php';
+        parent::navigateTo($request);
     }
 
     public function toDeleteTask(Request $request){
-        $this->taskService->delete($request->getRequestParam('id'));
-        $acao = 'excluida';
+        try{
+            $this->taskService->delete($request->getRequestParam('id'));
+            $request = new Request('/', 'GET', ['message' => 'A atividade foi excluída com sucesso.', 'status' => 'success']);
+        }
+        catch(Exception $e){
+            $request = new Request('/', 'GET', ['message' => 'Um erro ocorreu :(, tente novamente mais tarde.', 'status' => 'error']);
+        }
 
-        require_once ROOT_DIR . 'views/feedback.php';
+        parent::navigateTo($request);
     }
 
     private function getTaskOrNotFound(Request $request): Task{

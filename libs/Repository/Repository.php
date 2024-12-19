@@ -7,10 +7,12 @@ use PDO;
 use Exception;
 use PDOStatement;
 
+//TODO: Não tem o tratamento de XSS, seria interessante escapar ou remover caracteres como: <, >, ", ', &, /, ;, etc
+//Códigos em ordem: &lt; &gt; &quot; ( &apos; ou &#39; ) &amp; &#47; &#59;
+
 /**
  * Classe responsável por fazer a comunicação com as tabelas de um banco de dados
  * Tenta evitar SQL Injection por padrão
- * @author Rangel-Vieira
  */
 
 class Repository {

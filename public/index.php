@@ -2,6 +2,7 @@
 use Rangel\Tcc\Controller\NotFoundController;
 use Rangel\Tcc\Service\RequestService;
 
+session_start();
 define("ROOT_DIR", __DIR__ . '/../');
 
 require_once ROOT_DIR . 'vendor/autoload.php';

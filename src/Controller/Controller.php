@@ -1,6 +1,7 @@
 <?php 
 
 namespace Rangel\Tcc\Controller;
+use Rangel\Libs\Objectfy\Objectfy;
 use Rangel\Tcc\Entity\Request;
 
 interface IController{
@@ -20,5 +21,11 @@ abstract class Controller implements IController {
 
         $caller->$callMethod($request);
         exit;
+    }
+
+    public function navigateTo(Request $request): void{
+        $_SESSION['SERVER_REQUEST'] = Objectfy::getObjectKeysAndValues($request);
+
+        header('Location: ' . $request->getPath());
     }
 }

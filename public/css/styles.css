@@ -226,3 +226,26 @@ body{
 .spacing-bottom{
     margin-bottom: 25px;
 }
+
+.modal{
+    width: 100%;
+    font-size: 20px;
+    padding: 50px 15px;
+    border: 1px solid #d8bfd8;
+    border-radius: 15px;
+    box-shadow: 1px 1px 1px 1px gray;
+}
+
+.modal-success{
+    background-color: #36d653;
+    color: white;
+}
+
+.modal-error{
+    background-color: rgb(255, 60, 60);
+    color: white;
+}
+
+.hidden{
+    display: none;
+}
