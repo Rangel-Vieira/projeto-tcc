@@ -47,8 +47,16 @@
                     </section>    
                 <?php  } ?>
             </div>
-        </div>
 
+            <div class="pagination center">
+                <ul class="flex-center">
+                    <?php for($i=1; $i <= $pages; $i++) { ?>
+                        <a href="/?page=<?=$i?>"><li><?=$i?></li></a>
+                    <?php } ?>
+                </ul>
+            </div>
+
+        </div>
         <script>
             var modal = document.getElementById('modal');
             var status = <?= json_encode($status) ?>
