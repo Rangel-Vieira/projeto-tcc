@@ -25,23 +25,24 @@ class TaskService {
      * @param integer $itemsByPage recebe o número de itens a mostrar por página
      * @param integer $itemsLimit um limite "hardcoded" que não permite o usuário ultrapassar essa quantidade de itens exibidos por paginação
      */
-    public function list(int $page = 0, int $itemsByPage = 10, int $itemsLimit = 50): array{
-        if($itemsByPage == 0) { return []; }
-        if($itemsByPage > $itemsLimit) { $itemsByPage = $itemsLimit; }
+    public function list(int $page = 1, int $itemsByPage = 10, int $itemsLimit = 50): array{
+        if($itemsByPage == 0)
+            return [];
+        
+        if($itemsByPage > $itemsLimit)
+            $itemsByPage = $itemsLimit;
+        
+        if($page < 0) 
+            $page = 0;
         
         $totalInDatabase = $this->taskRepository->getTableCount();
-        $pageQty = floor($totalInDatabase / $itemsByPage);
+        $pageQty = ceil($totalInDatabase / $itemsByPage);
 
-        if($page < 0){
-            $page = 0;
-        }
-
-        if($page > $pageQty){
+        if($page > $pageQty)
             $page = $pageQty;
-        }
 
         $offset = $page * $itemsByPage;
-        return ['pages' => $pageQty+1, 'items' => $this->taskRepository->list($itemsByPage, $offset)];
+        return ['pages' => $pageQty, 'items' => $this->taskRepository->list($itemsByPage, $offset)];
     }
 
     public function findById(string $id){
